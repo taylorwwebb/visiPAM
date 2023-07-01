@@ -16,7 +16,7 @@ if args.diptest:
 else:
 	data_fname = './human_visiPAM_data.csv'
 
-## Get data for PAM
+# Load data
 file = open(data_fname, 'r')
 csvreader = csv.reader(file)
 # Get header
@@ -27,6 +27,7 @@ for row in csvreader:
 	rows.append(row)
 # Close file
 file.close()
+
 # Get data for PAM
 all_PAM_SSC_targ_animal = []
 all_PAM_SSC_targ_chair = []
@@ -34,15 +35,15 @@ all_PAM_DSC_targ_animal = []
 all_PAM_DSC_targ_chair = []
 for r in range(len(rows)):
 	if rows[r][0] == 'pam':
-		if rows[r][np.where(np.array(header) == 'dist_to_center')[0][0]] != '-':
-			dist_to_mean = float(rows[r][np.where(np.array(header) == 'dist_to_center')[0][0]])
-			if rows[r][np.where(np.array(header) == 'within')[0][0]].upper() == 'TRUE':
-				if rows[r][np.where(np.array(header) == 'tgt_cls')[0][0]] == 'animal':
+		if rows[r][8] != '-':
+			dist_to_mean = float(rows[r][8])
+			if rows[r][3].upper() == 'TRUE':
+				if rows[r][5] == 'animal':
 					all_PAM_SSC_targ_animal.append(dist_to_mean)
 				else:
 					all_PAM_SSC_targ_chair.append(dist_to_mean)
 			else:
-				if rows[r][np.where(np.array(header) == 'tgt_cls')[0][0]] == 'animal':
+				if rows[r][5] == 'animal':
 					all_PAM_DSC_targ_animal.append(dist_to_mean)
 				else:
 					all_PAM_DSC_targ_chair.append(dist_to_mean)
@@ -50,18 +51,6 @@ PAM_SSC_targ_animal = np.mean(all_PAM_SSC_targ_animal)
 PAM_DSC_targ_animal = np.mean(all_PAM_DSC_targ_animal)
 PAM_SSC_targ_chair = np.mean(all_PAM_SSC_targ_chair)
 PAM_DSC_targ_chair = np.mean(all_PAM_DSC_targ_chair)
-
-## Get human data
-file = open(data_fname, 'r')
-csvreader = csv.reader(file)
-# Get header
-header = next(csvreader)
-# Get rows
-rows = []
-for row in csvreader:
-	rows.append(row)
-# Close file
-file.close()
 
 # Get subject IDs
 subjIDs = []
@@ -74,7 +63,6 @@ all_SSC_targ_animal = []
 all_SSC_targ_chair = []
 all_DSC_targ_animal = []
 all_DSC_targ_chair = []
-data_missing = []
 for s in range(len(unique_subjIDs)):
 	# Loop through trials and get subject data
 	SSC_targ_animal = []
@@ -83,14 +71,14 @@ for s in range(len(unique_subjIDs)):
 	DSC_targ_chair = []
 	for r in range(len(rows)):
 		if rows[r][0] == str(unique_subjIDs[s]):
-			dist_to_mean = float(rows[r][np.where(np.array(header) == 'dist_to_center')[0][0]])
-			if rows[r][np.where(np.array(header) == 'within')[0][0]].upper() == 'TRUE':
-				if rows[r][np.where(np.array(header) == 'tgt_cls')[0][0]] == 'animal':
+			dist_to_mean = float(rows[r][8])
+			if rows[r][3].upper() == 'TRUE':
+				if rows[r][5] == 'animal':
 					SSC_targ_animal.append(dist_to_mean)
 				else:
 					SSC_targ_chair.append(dist_to_mean)
 			else:
-				if rows[r][np.where(np.array(header) == 'tgt_cls')[0][0]] == 'animal':
+				if rows[r][5] == 'animal':
 					DSC_targ_animal.append(dist_to_mean)
 				else:
 					DSC_targ_chair.append(dist_to_mean)
