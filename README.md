@@ -26,6 +26,12 @@ To perform correlation analysis with the edge-only visiPAM ablation model, run:
 python3 ./correlation_analyses.py --model edge_only
 ```
 
+Raw human behavioral data (including marker placement for each trial) can be accessed in the file ```raw_data.human.xlsx```.
+
+Behavioral stimuli can be found in the directory ```./stimuli```.
+
+Pointcloud data can be found in the directory ```./pointclouds```.
+
 ## Prerequisites
 
 - Python 3
